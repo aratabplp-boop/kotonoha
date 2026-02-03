@@ -13,7 +13,7 @@
 
 
 ## 3. アプリのデプロイURL
-
+https://aratakayamoyan.sakura.ne.jp/Kotonoha/
 
 ## 4.　IDとパスワード
 - なし　追って実装予定
