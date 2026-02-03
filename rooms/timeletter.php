@@ -3,11 +3,11 @@
 <div id="scene-quiz" class="scene active">
     <div style="padding: 40px; text-align: center;">
         <div class="large-char">
-            <img src="../img/thankyou.png" alt="ありがとうアイコン">
+            <img src="../img/timecupsel.png" alt="タイムレターアイコン">
         </div>
         
-        <h2>パパママありがとう💛のへや</h2>
-        <p>こどもたちから、パパママへの今日のありがとうを伝えるよ</p>
+        <h2>タイムレターのへや</h2>
+        <p>みらいのかぞくへのメッセージをふきこむよ</p>
         
         <br><br>
         

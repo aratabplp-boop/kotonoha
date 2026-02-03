@@ -3,11 +3,11 @@
 <div id="scene-quiz" class="scene active">
     <div style="padding: 40px; text-align: center;">
         <div class="large-char">
-            <img src="../img/thankyou.png" alt="ありがとうアイコン">
+            <img src="../img/kirari.png" alt="キラリアイコン">
         </div>
         
-        <h2>パパママありがとう💛のへや</h2>
-        <p>こどもたちから、パパママへの今日のありがとうを伝えるよ</p>
+        <h2>きょうのキラリ☆のへや</h2>
+        <p>いちばんかがやいていたことを、ほめたたえるよ</p>
         
         <br><br>
         

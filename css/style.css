@@ -50,6 +50,7 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden; /* はみ出た分をスクロールで見せる */
 }
 
 /* =============================================
@@ -65,10 +66,11 @@ body, html {
 }
 
 .scene.active {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
-    height: 100%;           /* コンテナいっぱいを部屋にする */
-}
+    height: 100%;      
+    overflow: hidden;
+    }
 
 /* =============================================
    オープニング・ぷにっとボタン（リッチ版）
@@ -218,10 +220,19 @@ body, html {
 }
 
 /* オープニングとWelcomeの「中」にある時だけ、ヘッダーとフッターを隠す */
-#scene-title .garden-header,
+/* #scene-title .garden-header,
 #scene-title .garden-footer,
 #scene-welcome .garden-header,
 #scene-welcome .garden-footer {
+    display: none !important;
+} */
+
+/* タイトルとWelcomeの時だけ、共通ヘッダー・フッターを消す */
+/* body内に #scene-title または #scene-welcome がある時だけ有効 */
+body:has(#scene-title) .garden-header,
+body:has(#scene-title) .garden-footer,
+body:has(#scene-welcome) .garden-header,
+body:has(#scene-welcome) .garden-footer {
     display: none !important;
 }
 
@@ -329,6 +340,7 @@ body, html {
     flex: 1;
     overflow-y: auto;
     background: var(--bg-main);
+    -webkit-overflow-scrolling: touch; /* スマホでスルスル動くように */
 }
 
 .map-content {
@@ -380,8 +392,8 @@ body, html {
 [data-room="interview"]  { top: 10px; }
 [data-room="kirari"]     { top: 115px; } /* 120 -> 115 */
 [data-room="thanks"]     { top: 220px; } /* 230 -> 220 */
-[data-room="read"]       { top: 325px; } /* 340 -> 325 */
-[data-room="mistake"]    { top: 430px; } /* 450 -> 430 */
-[data-room="timecapsel"] { top: 535px; } /* 560 -> 535 */
+[data-room="quiz"]       { top: 325px; } /* 340 -> 325 */
+[data-room="daijyobu"]    { top: 430px; } /* 450 -> 430 */
+[data-room="timeletter"] { top: 535px; } /* 560 -> 535 */
 
 .room:active .room-icon-container { transform: translateY(4px); box-shadow: 0 2px 0 #e8dfcf; }
