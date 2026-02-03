@@ -1,0 +1,387 @@
+/* 1. @import は必ず一番上に書く（VS Codeのエラー原因） */
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&display=swap');
+
+/* =============================================
+   設定：インタビューアプリ風カラー
+   ============================================= */
+:root {
+    --bg-main: #fdfaf4;       /* 温かいベージュ */
+    --accent-color: #f19072;  /* サーモンピンク */
+    --text-main: #5c4033;     /* 濃いブラウン */
+    --header-bg: #ffffff;
+    --footer-bg: #ffffff;
+    --completed-green: #89c997; 
+    --nav-inactive: #d2b48c;  /* 落ち着いた茶色 */
+}
+
+/* =============================================
+   ベースレイアウト
+   ============================================= */
+* { box-sizing: border-box; }
+
+body, html {
+    margin: 0; padding: 0;
+    height: 100%; width: 100%;
+    background-color: #f5f1e9; /* PCで見るときの外側の色 */
+    font-family: 'Kiwi Maru', serif;
+    color: var(--text-main);
+    overflow: hidden; /* ブラウザ全体のスクロールを禁止 */
+}
+
+/* PC中央寄せ */
+.garden-viewport {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* スマホコンテナ */
+.garden-container {
+    width: 100%;
+    max-width: 450px;
+    height: 92vh;
+    margin: 2vh auto; /* 上下に少し余白を作って浮かせる */
+    background-color: var(--bg-main);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* =============================================
+   シーン管理
+   ============================================= */
+.scene {
+    display: none;
+    /* position: absolute; */
+    top: 0; left: 0;
+    width: 100%;
+    flex: 1; /* 親(container)の余白を埋める設定に変更 */
+    flex-direction: column;
+}
+
+.scene.active {
+    display: flex;
+    flex-direction: column;
+    height: 100%;           /* コンテナいっぱいを部屋にする */
+}
+
+/* =============================================
+   オープニング・ぷにっとボタン（リッチ版）
+   ============================================= */
+.btn-puni {
+    padding: 16px 45px;
+    font-family: 'Kiwi Maru', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    
+    /* 質感を作るグラデーション：上を明るく、下を少し濃く */
+    background: linear-gradient(to bottom, #f5a88d 0%, #f19072 100%);
+    
+    /* 二重の影：ボタン自体の立体感(4px) + 全体の浮かび上がり(15px) */
+    border: none;
+    border-radius: 50px;
+    box-shadow: 
+        0 6px 0 #d17a5d,              /* ボタンの厚み */
+        0 10px 20px rgba(241, 144, 114, 0.3); /* 柔らかな影 */
+    
+    transition: all 0.2s ease;
+    outline: none;
+    position: relative;
+}
+
+/* 光の反射：さらに「ぷるん」とした質感を出す */
+.btn-puni::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 15%;
+    width: 70%;
+    height: 30%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+}
+
+/* 押した時のリアルな反応 */
+.btn-puni:active {
+    transform: translateY(4px);      /* 4px押し込む */
+    box-shadow: 
+        0 2px 0 #d17a5d,              /* 厚みを減らす */
+        0 4px 10px rgba(241, 144, 114, 0.2);
+    background: linear-gradient(to bottom, #f19072 0%, #f5a88d 100%); /* 色を反転 */
+}
+
+/* タイトル・歓迎画面 */
+#scene-title {
+    background: linear-gradient(180deg, #fffcf5 0%, #fdfaf4 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#scene-welcome {
+    /* シーン自体を中央寄せの土台にする */
+    justify-content: center;
+    align-items: center;
+}
+
+#scene-welcome .welcome-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* 縦方向の中央寄せを追加 */
+    width: 100%;
+    height: 100%;            /* 高さをいっぱいまで使う */
+    gap: 20px;               /* キャラ、文字、ボタンの間にほどよい隙間を作る */
+}
+
+/* キャラクター写真の枠 */
+.large-char {
+    width: 150px;       /* ホーム画面より大きく */
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid #f0e6d6;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(92, 64, 51, 0.1);
+    animation: bounce 2s infinite; /* 既存の跳ねる動き */
+}
+
+.large-char img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 歓迎画面用の小さいぷにっとボタン（もし定義がなければ追加） */
+.btn-puni-small {
+    padding: 10px 25px;
+    font-family: 'Kiwi Maru', serif;
+    font-size: 1rem;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 0 #d17a5d;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.btn-puni-small:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #d17a5d;
+}
+
+
+.link-sub-album {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: var(--nav-inactive);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.link-sub-album:hover {
+    color: var(--accent-color);
+}
+/* =============================================
+   ホーム画面：固定パーツ
+   ============================================= */
+.garden-header {
+    height: 60px;
+    width: 100%;
+    background: var(--header-bg);
+    border-bottom: 2px solid #f0e6d6;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.garden-footer {
+  
+    height: 80px;
+    width: 100%;
+    background: var(--footer-bg);
+    border-top: 2px solid #f0e6d6;
+    flex-shrink: 0;
+    z-index: 100;    
+    display: flex;
+}
+
+/* オープニングとWelcomeの「中」にある時だけ、ヘッダーとフッターを隠す */
+#scene-title .garden-header,
+#scene-title .garden-footer,
+#scene-welcome .garden-header,
+#scene-welcome .garden-footer {
+    display: none !important;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
+}
+.nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* アイコンと文字を縦に並べる */
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+}
+.nav-icon { font-size: 22px; }
+.nav-text { 
+    font-size: 10px; 
+    font-weight: 500;
+    color: #5c4033;
+}
+
+
+/* =============================================
+   キャラクターメッセージエリア（横並び確定版）
+   ============================================= */
+.char-welcome-area {
+    padding: 15px 20px;
+    background: linear-gradient(to bottom, #ffffff, var(--bg-main));
+    display: flex;
+    justify-content: center; /* コンテナ内の中央に寄せる */
+}
+
+.char-wrapper {
+    display: flex;
+    flex-direction: row; /* 横に並べる */
+    align-items: center; /* 垂直方向の中央揃え */
+    gap: 12px;           /* 画像と吹き出しの隙間 */
+    width: 100%;
+}
+
+.char-image {
+    width: 70px;         /* 少しコンパクトに調整 */
+    height: 70px;
+    flex-shrink: 0;      /* 画像が潰れないように固定 */
+    border-radius: 50%;
+    overflow: hidden;    /* 枠からはみ出た画像をカット */
+    background: white;
+    border: 2px solid #f0e6d6;
+    animation: char-float 3s infinite ease-in-out;
+}
+
+.char-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 枠いっぱいに写真を表示 */
+}
+
+.char-bubble-main {
+    flex: 1;             /* 残りの横幅をすべて使う */
+    background: white;
+    border: 2px solid #f0e6d6;
+    border-radius: 18px;
+    padding: 12px 15px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(92, 64, 51, 0.05);
+}
+
+/* 左側に三角（吹き出しのしっぽ）をつける */
+.char-bubble-main::before {
+    content: "";
+    position: absolute;
+    left: -10px;         /* 吹き出しの左側に配置 */
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 10px solid #f0e6d6;
+}
+
+.char-bubble-main::after {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 9px solid white;
+}
+
+#home-char-say {
+    margin: 0;
+    font-size: 0.85rem;   /* スマホで見やすいサイズ */
+    line-height: 1.5;
+    color: var(--text-main);
+}
+/* =============================================
+   庭（ガーデン）の景観デザイン：6部屋凝縮版
+   ============================================= */
+.garden-map {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--bg-main);
+}
+
+.map-content {
+    min-height: 750px; 
+    padding: 10px 0 80px 0;
+    position: relative;
+    background: radial-gradient(circle at 50% 50%, #fdfaf4 0%, #f5f1e9 100%);
+}
+
+/* S字の道と砂利道 */
+.map-content::before {
+    content: ""; position: absolute; top: 0; left: 50%;
+    width: 60px; height: 100%; background: rgba(240, 230, 214, 0.4);
+    transform: translateX(-50%); border-radius: 50px; filter: blur(8px); z-index: 1;
+}
+
+.map-content::after {
+    content: ""; position: absolute; top: 0; left: 50%;
+    width: 60px; height: 100%; background-image: radial-gradient(#efe4d1 20%, transparent 20%);
+    background-size: 10px 10px; transform: translateX(-50%); opacity: 0.3; z-index: 1;
+}
+
+/* 部屋のベース */
+.room {
+    position: absolute; display: flex; flex-direction: column;
+    align-items: center; width: 110px; z-index: 2; cursor: pointer;
+}
+
+.room-icon-container {
+    width: 80px; height: 80px; background: white;
+    border-radius: 20px; border: 2px solid #f0e6d6;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 4px 0 #e8dfcf; overflow: hidden;
+    transition: transform 0.1s;
+}
+
+.room-icon-container img { width: 85%; height: 85%; object-fit: contain; }
+
+.room-name {
+    margin-top: 8px; font-size: 0.85rem; color: var(--text-main);
+    background: rgba(255, 255, 255, 0.9); padding: 4px 12px;
+    border-radius: 10px; white-space: nowrap; font-weight: 500;
+}
+
+/* ジグザグ配置 */
+.room.left  { left: 15%; }
+.room.right { right: 15%; }
+
+[data-room="interview"]  { top: 10px; }
+[data-room="kirari"]     { top: 115px; } /* 120 -> 115 */
+[data-room="thanks"]     { top: 220px; } /* 230 -> 220 */
+[data-room="read"]       { top: 325px; } /* 340 -> 325 */
+[data-room="mistake"]    { top: 430px; } /* 450 -> 430 */
+[data-room="timecapsel"] { top: 535px; } /* 560 -> 535 */
+
+.room:active .room-icon-container { transform: translateY(4px); box-shadow: 0 2px 0 #e8dfcf; }
