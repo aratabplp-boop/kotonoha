@@ -11,6 +11,19 @@
 - ログがたまると、「お楽しみコンテンツ」を生成、自動配信
 - マスタールームで、達人たちが会話Tipsを配信 
 
+- 各部屋のUXとデータのやりとりをまとめた表はこちら
+![エクセルまとめ](./img/rooms.png)
+
+- インタビューの部屋　試作版URL　https://aratakayamoyan.sakura.ne.jp/interview/
+
+- クイズの部屋　試作版URL　https://aratakayamoyan.sakura.ne.jp/family_quiz/
+
+- ヘッダーのUXとデータやりとり
+![ヘッダー](./img/header.png)
+
+- フッターのUXとデータやりとり
+![フッター]
+
 
 ## 3. アプリのデプロイURL
 https://aratakayamoyan.sakura.ne.jp/Kotonoha/
@@ -25,3 +38,4 @@ https://aratakayamoyan.sakura.ne.jp/Kotonoha/
 
 
 ## 6. 備考(備忘録)
+- ララベルでログイン機能を作ってから、データベースをつくります！
